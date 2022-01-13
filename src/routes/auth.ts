@@ -1,13 +1,21 @@
 import { Request, Response, Router } from "express";
+import { User } from "../entities/User";
 
-const register = (req: Request, res: Response) => {
+const register = async (req: Request, res: Response) => {
 	const { email, username, password } = req.body;
 
 	try {
 		// TODO: Validate data
 		// TODO: Create user
+		const user = new User({ email, username, password });
+		await user.save();
 		// TODO: Return the user
-	} catch (err) {}
+		return res.json(user);
+	} catch (err) {
+		return res.status(500).json({
+			error: err,
+		});
+	}
 };
 
 const router = Router();
