@@ -23,7 +23,7 @@ const register = async (req: Request, res: Response) => {
 		// Create a new user
 		const user = new User({ email, username, password });
 
-		// Validate the registration (Check if isEmail and isLength are valid in src/entities/User.ts)
+		// Validate the registration (Check if isEmail and Length are valid in src/entities/User.ts)
 		errors = await validate(user);
 
 		if (errors.length > 0) {
@@ -90,8 +90,26 @@ const login = async (req: Request, res: Response) => {
 	}
 };
 
+// Will tell the user whether they are authenticated or not
+const me = async (req: Request, res: Response) => {
+	try {
+		const token = req.cookies.token;
+		if (!token) throw new Error("No token, not authenticated");
+
+		const { username } = jwt.verify(token, process.env.JWT_SECRET);
+
+		const user = await User.findOne({ username });
+		if (!user) throw new Error("No token, not authenticated");
+
+		return res.json(user);
+	} catch (err) {
+		return res.status(401).json({ error: err.message });
+	}
+};
+
 const router = Router();
 router.post("/register", register);
 router.post("/login", login);
+router.get("/me", me);
 
 export default router;
