@@ -17,3 +17,13 @@ Next.js: The out of the box server side rendering capabilites will allow us to s
 Express: Web framework of choice, to handle all the routes for the API and pages. Can add middleware to operate on the server side.
 
 TypeORM: Works with SQL based database nicely (PostgreSQL), very easy to use with Typescript.
+
+Morgan: To log out the API requests that are sent
+
+## Authentication flow
+**Registration:**
+
+
+
+**Login:**
+Generate a JSON web token when login is successful. This is stored on the users machine and used to lets the server know the user is logged in on this machine. Store this token inside a cookie and send to the User, this user will then use the cookie in subsequent requests to identify them.
