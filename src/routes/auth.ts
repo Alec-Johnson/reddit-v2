@@ -1,7 +1,9 @@
-import { validate } from "class-validator";
+import { isEmpty, validate } from "class-validator";
 import { Request, Response, Router } from "express";
 import { User } from "../entities/User";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import cookie from "cookie";
 
 const register = async (req: Request, res: Response) => {
 	const { email, username, password } = req.body;
@@ -29,6 +31,7 @@ const register = async (req: Request, res: Response) => {
 		}
 
 		await user.save();
+
 		return res.json(user);
 	} catch (err) {
 		return res.status(500).json({
@@ -42,6 +45,15 @@ const login = async (req: Request, res: Response) => {
 	const { username, password } = req.body;
 	// Look for the user in the database
 	try {
+		let errors: any = {};
+		if (isEmpty(username)) errors.username = "Username is required";
+		if (isEmpty(password)) errors.password = "Password is required";
+
+		// If we have errors, return them
+		if (Object.keys(errors).length > 0) {
+			return res.status(400).json(errors);
+		}
+
 		const user = await User.findOne({ username });
 
 		if (!user) return res.status(404).json({ error: "User not found" });
@@ -55,6 +67,22 @@ const login = async (req: Request, res: Response) => {
 		if (!passwordMatches) {
 			return res.status(401).json({ password: "Password does not match" });
 		}
+
+		// Create a token and sign it with the username
+		const token = jwt.sign({ username }, process.env.JWT_SECRET);
+		// Set headers on the response object and store on client side as a cookie
+		res.set(
+			"Set-Cookie",
+			cookie.serialize("token", token, {
+				httpOnly: true, // Can't be accessed by the client, more secure
+				secure: process.env.NODE_ENV === "production", // Only send the cookie over HTTPS
+				sameSite: "strict", // Cookie should only come from our domain
+				maxAge: 3600, // Cookie will expire after 1 hour
+				path: "/", // Valid across all paths, default is /api/auth
+			})
+		);
+
+		return res.json(user);
 	} catch (err) {
 		return res.status(500).json({
 			error: err,
@@ -64,5 +92,6 @@ const login = async (req: Request, res: Response) => {
 
 const router = Router();
 router.post("/register", register);
+router.post("/login", login);
 
 export default router;
