@@ -10,7 +10,7 @@ import { IsEmail, Length } from "class-validator";
 import { Exclude } from "class-transformer";
 
 import Entity from "./Entity";
-import { Post } from "./Post";
+import Post from "./Post";
 
 @TOEntity("users")
 export default class User extends Entity {
