@@ -1,28 +1,43 @@
+import axios from "axios";
 import Head from "next/head";
 import Link from 'next/link';
+import { FormEvent, useState } from "react";
+import InputGroup from "../components/InputGroup";
+import { useRouter } from 'next/router'
 
 export default function Register() {
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState<any>({});
+
+  const submitForm = async (event: FormEvent) => {
+    event.preventDefault();
+    try {
+      await axios.post('/auth/register', {
+        email, password, username
+      })
+
+      router.push('/login')
+    } catch (err) {
+      console.log(err);
+      setErrors(err.response.data)
+    }
+  }
   return (
     <div className="flex">
       <Head>
         <title>Register</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="w-40 h-screen bg-cover" style={{ backgroundImage: "url('/images/rocks.jpg')"}}>
-
+      <div className="h-screen bg-cover w-36" style={{ backgroundImage: "url('/images/rocks.jpg')"}}>
       </div>
-      <div className="flex flex-col justify-center pl-6 w-70">
+      <div className="flex flex-col justify-center pl-6 w-72">
         <h1 className="mb-2 text-lg">Sign Up</h1>
-        <form>
-          <div className="mb-2">
-            <input className="w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded" type='email' placeholder="Email" />
-          </div>
-          <div className="mb-2">
-            <input className="w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded" type='text' placeholder="Username" />
-          </div>
-          <div className="mb-2">
-            <input className="w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded" type='password' placeholder="Password" />
-          </div>
+        <form onSubmit={submitForm}>
+          <InputGroup className="mb-2" type='email' value={email} setValue={setEmail} placeholder='EMAIL' error={errors.email} />
+          <InputGroup className="mb-2" type='text' value={username} setValue={setUsername} placeholder='USERNAME' error={errors.username} />
+          <InputGroup className="mb-2" type='password' value={password} setValue={setPassword} placeholder='PASSWORD' error={errors.password} />
           <button className="w-full py-2 mb-4 text-xs font-bold text-white uppercase bg-blue-500 border border-blue-500 rounded">
             Sign Up
           </button>
