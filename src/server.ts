@@ -8,7 +8,7 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 
 import trim from "./middleware/trim";
-import authRoutes from "./routes/auth";
+import authRoutes from "./routes/UserRouter";
 
 const app = express();
 

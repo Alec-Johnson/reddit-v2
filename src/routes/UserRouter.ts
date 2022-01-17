@@ -4,6 +4,7 @@ import { User } from "../entities/User";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import cookie from "cookie";
+import auth from "../middleware/auth";
 
 const register = async (req: Request, res: Response) => {
 	const { email, username, password } = req.body;
@@ -91,20 +92,8 @@ const login = async (req: Request, res: Response) => {
 };
 
 // Will tell the user whether they are authenticated or not
-const me = async (req: Request, res: Response) => {
-	try {
-		const token = req.cookies.token;
-		if (!token) throw new Error("No token, not authenticated");
-
-		const { username } = jwt.verify(token, process.env.JWT_SECRET);
-
-		const user = await User.findOne({ username });
-		if (!user) throw new Error("No token, not authenticated");
-
-		return res.json(user);
-	} catch (err) {
-		return res.status(401).json({ error: err.message });
-	}
+const me = (_: Request, res: Response) => {
+	return res.json(res.locals.user);
 };
 
 const logout = (_: Request, res: Response) => {
@@ -125,7 +114,7 @@ const logout = (_: Request, res: Response) => {
 const router = Router();
 router.post("/register", register);
 router.post("/login", login);
-router.get("/me", me);
-router.get("/logout", logout);
+router.get("/me", auth, me);
+router.get("/logout", auth, logout);
 
 export default router;
