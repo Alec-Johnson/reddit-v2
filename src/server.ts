@@ -21,7 +21,7 @@ app.use(morgan("dev")); // Dev logging, nice colors
 app.use(trim); // Trim all request bodies
 app.use(cookieParser());
 
-app.get("/", (req, res) => res.send("Hollow world"));
+app.get("/", (_, res) => res.send("Hollow world"));
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/subs", subRoutes);

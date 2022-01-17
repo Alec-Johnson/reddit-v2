@@ -70,7 +70,7 @@ const login = async (req: Request, res: Response) => {
 		}
 
 		// Create a token and sign it with the username
-		const token = jwt.sign({ username }, process.env.JWT_SECRET);
+		const token = jwt.sign({ username }, process.env.JWT_SECRET!);
 		// Set headers on the response object and store on client side as a cookie
 		res.set(
 			"Set-Cookie",

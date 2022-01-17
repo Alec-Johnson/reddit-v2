@@ -8,7 +8,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 		const token = req.cookies.token;
 		if (!token) throw new Error("No token, not authenticated");
 
-		const { username } = jwt.verify(token, process.env.JWT_SECRET);
+		const { username } = jwt.verify(token, process.env.JWT_SECRET!);
 
 		const user = await User.findOne({ username });
 		if (!user) throw new Error("No token, not authenticated");

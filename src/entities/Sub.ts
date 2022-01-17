@@ -6,7 +6,6 @@ import {
 	JoinColumn,
 	OneToMany,
 } from "typeorm";
-import { makeId, makeSlug } from "../util/helpers";
 
 import Entity from "./Entity";
 import Post from "./Post";

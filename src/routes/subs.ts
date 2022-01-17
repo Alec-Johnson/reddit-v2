@@ -7,7 +7,7 @@ import Sub from "../entities/Sub";
 import auth from "../middleware/auth";
 
 const createSub = async (req: Request, res: Response) => {
-	const { name, title, description, imageUrn, bannerUrn } = req.body;
+	const { name, title, description } = req.body;
 
 	const author: User = res.locals.user;
 
