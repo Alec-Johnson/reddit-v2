@@ -64,7 +64,7 @@ const login = async (req: Request, res: Response) => {
 
 		const user = await User.findOne({ username });
 
-		if (!user) return res.status(404).json({ error: "User not found" });
+		if (!user) return res.status(404).json({ username: "User not found" });
 
 		// If the user exists, compare the password
 		// user.password is the hashed password, password is the plain text password
