@@ -4,7 +4,9 @@ import {
 	Index,
 	ManyToOne,
 	JoinColumn,
+	BeforeInsert,
 } from "typeorm";
+import { makeId, makeSlug } from "../util/helpers";
 
 import Entity from "./Entity";
 import User from "./User";
@@ -36,4 +38,10 @@ export class Post extends Entity {
 	@ManyToOne(() => User, (user) => user.posts)
 	@JoinColumn({ name: "username", referencedColumnName: "username" })
 	author: User;
+
+	@BeforeInsert()
+	makeIdAndSlug() {
+		this.identifier = makeId(7);
+		this.slug = makeSlug(this.title);
+	}
 }
