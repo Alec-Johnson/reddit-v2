@@ -19,6 +19,9 @@ module.exports = {
           900: '#00182a',
         },
       },
+      spacing: {
+        160: '40rem',
+      }
     },
   },
   variants: {
