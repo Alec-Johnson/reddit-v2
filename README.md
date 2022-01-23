@@ -5,9 +5,9 @@ A fullstack clone of the website www.reddit.com. Users can expect to create an a
 
 ## Tech Stack
 
-**Client:** Typescript, React, Next.js, Redux, TailwindCSS,
+**Frontend:** Typescript, React, Next.js, Redux, TailwindCSS,
 
-**Server:** Typescript, Node.js, Express, TypeORM, PostgreSQL
+**Backend:** Typescript, Node.js, Express, TypeORM, PostgreSQL
 
 ### Why 
 Typescript: Type safety and more robust code, overall improves the developer workflow and productivity.
@@ -32,3 +32,6 @@ Generate a JSON web token when login is successful. This is stored on the users 
 User makes a GET request once logged in and verifies they are authenticated.
 
 **JsonWebToken:** Grab token from the Request object, verify that the token is correct based on the username, if true return the user.
+
+## Database
+https://drawsql.app/a-32/diagrams/reddit-clone-postgresql/embed
