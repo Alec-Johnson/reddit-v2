@@ -1,19 +1,15 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
-
 import User from "../entities/User";
 
-export default async (req: Request, res: Response, next: NextFunction) => {
+// If we want a route that requires a user to be logged in, we use both middleware (auth and user middleware)
+// If we have a route that doesn't require a user to be logged in, but when the user is logged in
+// functionality changes, we use only user midddleware
+
+export default async (_: Request, res: Response, next: NextFunction) => {
 	try {
-		const token = req.cookies.token;
-		if (!token) throw new Error("No token, not authenticated");
+		const user: User | undefined = res.locals.user;
 
-		const { username } = jwt.verify(token, process.env.JWT_SECRET!);
-
-		const user = await User.findOne({ username });
-		if (!user) throw new Error("No token, not authenticated");
-
-		res.locals.user = user;
+		if (!user) throw new Error("Not authenticated");
 
 		return next();
 	} catch (err) {
