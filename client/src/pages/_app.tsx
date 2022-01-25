@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import Navbar from '../components/Navbar'
 
 import "../styles/tailwind.css";
+import "../styles/icon.css";
 
 axios.defaults.baseURL = 'http://localhost:5000/api'
 axios.defaults.withCredentials = true
