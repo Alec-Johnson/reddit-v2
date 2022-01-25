@@ -34,6 +34,7 @@ const getPosts = async (_: Request, res: Response) => {
 	try {
 		const posts = await Post.find({
 			order: { createdAt: "DESC" },
+			relations: ["comments", "votes", "sub"],
 		});
 		return res.json(posts);
 	} catch (err) {
@@ -48,7 +49,7 @@ const getPost = async (req: Request, res: Response) => {
 		const post = await Post.findOneOrFail(
 			{ identifier, slug },
 			{
-				relations: ["sub", "comments", "votes"],
+				relations: ["sub"],
 			}
 		);
 		return res.json(post);
