@@ -1,12 +1,17 @@
 import axios from "axios";
+
 import Head from "next/head";
 import Link from 'next/link';
-import { FormEvent, useState } from "react";
-import InputGroup from "../components/InputGroup";
 import { useRouter } from 'next/router'
+import { FormEvent, useState } from "react";
+
+import InputGroup from "../components/InputGroup";
+import { useAuthState } from "../context/auth";
 
 export default function Register() {
   const router = useRouter();
+  const { authenticated } = useAuthState();
+
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -25,8 +30,9 @@ export default function Register() {
       setErrors(err.response.data)
     }
   }
+  if (authenticated) router.push('/')
   return (
-    <div className="flex">
+    <div className="flex bg-white">
       <Head>
         <title>Register</title>
       </Head>

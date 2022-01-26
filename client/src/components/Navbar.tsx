@@ -1,7 +1,21 @@
 import Link from "next/link"
 import RedditLogo from '../images/reddit.svg'
+import { useAuthState, useAuthDispatch } from "../context/auth";
+import axios from "axios";
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
+  const { authenticated, loading } = useAuthState()
+  const disptach = useAuthDispatch()
+
+  const handleLogout = () => {
+    axios.get("/auth/logout")
+      .then(() => {
+        disptach('LOGOUT')
+        window.location.reload()
+      })
+      .catch(err => console.log(err))
+  }
+
   return (
     <div className="fixed inset-x-0 top-0 z-10 flex items-center justify-center h-12 px-5 bg-white">
     {/* Logo and title */}
@@ -20,12 +34,20 @@ const Navbar: React.FC = () => {
     </div>
     {/* Auth buttons */}
     <div className="flex">
-      <Link href='/login'>
-        <a className="w-32 py-1 mr-4 leading-5 empty blue button">Login</a>
-      </Link>
-      <Link href='/register'>
-        <a className="w-32 py-1 leading-5 blue button">Sign Up</a>
-      </Link>
+      {!loading && authenticated ? (
+        <button className="w-32 py-1 mr-4 leading-5 empty blue button" onClick={handleLogout}>
+          Logout
+        </button>
+      ): (
+        <>
+          <Link href='/login'>
+            <a className="w-32 py-1 mr-4 leading-5 empty blue button">Login</a>
+          </Link>
+          <Link href='/register'>
+            <a className="w-32 py-1 leading-5 blue button">Sign Up</a>
+          </Link>
+        </>
+      )}
     </div>
   </div>
   )

@@ -1,14 +1,18 @@
 import axios from "axios";
 import Head from "next/head";
 import Link from 'next/link';
-import { FormEvent, useState } from "react";
-import InputGroup from "../components/InputGroup";
 import { useRouter } from 'next/router'
+import { FormEvent, useState } from "react";
 
-export default function Register() {
+import InputGroup from "../components/InputGroup";
+
+import { useAuthDispatch, useAuthState } from "../context/auth";
+
+export default function Login() {
   const router = useRouter();
+  const dispatch = useAuthDispatch();
+  const { authenticated } = useAuthState();
 
-  const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<any>({});
@@ -16,18 +20,21 @@ export default function Register() {
   const submitForm = async (event: FormEvent) => {
     event.preventDefault();
     try {
-      await axios.post('/auth/login', {
+      const res = await axios.post('/auth/login', {
         username, password
       })
-
+      dispatch('LOGIN', res.data)
       router.push('/')
     } catch (err) {
       console.log(err);
       setErrors(err.response.data)
     }
   }
+
+  if (authenticated) router.push('/')
+
   return (
-    <div className="flex">
+    <div className="flex bg-white">
       <Head>
         <title>Login</title>
       </Head>
