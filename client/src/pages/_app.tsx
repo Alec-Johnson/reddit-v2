@@ -2,6 +2,8 @@ import { AppProps } from "next/dist/shared/lib/router/router";
 import axios from 'axios'
 import { useRouter } from "next/router";
 
+import { AuthProvider } from '../context/auth'
+
 import Navbar from '../components/Navbar'
 
 import "../styles/tailwind.css";
@@ -14,11 +16,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 	const { pathname } = useRouter()
 	const authRoutes = ['/login', '/register']
 	const isAuthRoute = authRoutes.includes(pathname)
+	
 	return (
-	<>
+	<AuthProvider>
 		{!isAuthRoute && <Navbar />}
 		<Component {...pageProps} />
-	</>
+	</AuthProvider>
 	)
 }
 
