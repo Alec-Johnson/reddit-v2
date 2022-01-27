@@ -1,6 +1,7 @@
 import { AppProps } from "next/dist/shared/lib/router/router";
 import axios from 'axios'
 import { useRouter } from "next/router";
+import { SWRConfig } from 'swr'
 
 import { AuthProvider } from '../context/auth'
 
@@ -18,10 +19,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 	const isAuthRoute = authRoutes.includes(pathname)
 	
 	return (
-	<AuthProvider>
-		{!isAuthRoute && <Navbar />}
-		<Component {...pageProps} />
-	</AuthProvider>
+		<SWRConfig value={{ fetcher: (url) => axios.get(url).then(res => res.data) }}>
+			<AuthProvider>
+				{!isAuthRoute && <Navbar />}
+				<Component {...pageProps} />
+			</AuthProvider>
+	</SWRConfig>
 	)
 }
 
