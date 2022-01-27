@@ -19,7 +19,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 	const isAuthRoute = authRoutes.includes(pathname)
 	
 	return (
-		<SWRConfig value={{ fetcher: (url) => axios.get(url).then(res => res.data) }}>
+		<SWRConfig value={{ 
+			fetcher: (url) => axios.get(url).then(res => res.data),
+			dedupingInterval: 10000,
+		}}>
 			<AuthProvider>
 				{!isAuthRoute && <Navbar />}
 				<Component {...pageProps} />
