@@ -1,9 +1,13 @@
 // Collection of route for misc purposes, not specfific to posts or users etc
 import { Request, Response, Router } from "express";
+import { getConnection } from "typeorm";
+
 import Comment from "../entities/Comment";
 import Post from "../entities/Post";
 import User from "../entities/User";
 import Vote from "../entities/Vote";
+import Sub from "../entities/Sub";
+
 import auth from "../middleware/auth";
 import user from "../middleware/user";
 
@@ -63,7 +67,41 @@ const vote = async (req: Request, res: Response) => {
 	}
 };
 
+const topSubs = async (_: Request, res: Response) => {
+	try {
+		/**
+		 * SELECT s.title, s.name,
+		 * COALESCE('http://localhost:5000/images/' || s."imageUrn", 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y') AS "imageUrl",
+		 * count(p.id) AS "postCount"
+		 * FROM subs s
+		 * LEFT JOIN posts p ON s.name = p."subName"
+		 * GROUP BY s.name, s.title, imageUrl
+		 * ORDER BY "postCount" DESC
+		 * LIMIT 5;
+		 */
+		// If sub has imageUrn, concat to baseUrl of server and images directory
+		// Else, use gravatar default image as URL
+		const imageUrlExp = `COALESCE('${process.env.APP_URL}/images/' || s."imageUrn" , 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y')`;
+		const subs = await getConnection()
+			.createQueryBuilder()
+			.select(
+				`s.title, s.name, ${imageUrlExp} as "imageUrl", count(p.id) as "postCount"`
+			)
+			.from(Sub, "s")
+			.leftJoin(Post, "p", `s.name = p."subName"`)
+			.groupBy('s.name, s.title, "imageUrl"')
+			.orderBy(`"postCount"`, "DESC")
+			.limit(5)
+			.execute();
+
+		return res.json(subs);
+	} catch (err) {
+		return res.status(500).json({ error: "Something went wrong" }); // No need for better client side error handling
+	}
+};
+
 const router = Router();
 router.post("/vote", user, auth, vote);
+router.get("/top-subs", topSubs);
 
 export default router;
