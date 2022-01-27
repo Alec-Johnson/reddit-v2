@@ -1,7 +1,4 @@
-import axios from 'axios'
 import Head from 'next/head'
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import useSWR from 'swr'
@@ -16,7 +13,7 @@ export default function Home() {
   const { data: posts } = useSWR<Post[]>('/posts')
 
   return (
-    <main className='p-12'>
+    <>
       <Head>
         <title>Reddit V2: the front page of the internet</title>
       </Head>
@@ -30,7 +27,7 @@ export default function Home() {
         {/* Sidebar */}
         <aside></aside>
       </div>
-    </main>
+    </>
   )
 }
 
