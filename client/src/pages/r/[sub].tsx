@@ -3,13 +3,14 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { ChangeEvent, createRef, Fragment, useEffect, useState } from "react";
 
+import axios from "axios";
 import useSWR from "swr";
 
 import { useAuthState } from '../../context/auth';
 import PostCard from "../../components/PostCard";
-
+import Sidebar from "../../components/Sidebar";
 import { Post, Sub as ISub } from "../../types";
-import axios from "axios";
+
 
 export default function Sub(){
   // Local state
@@ -24,7 +25,7 @@ export default function Sub(){
 
   // https://swr.vercel.app/docs/conditional-fetching
   const { data: sub, error, mutate} = useSWR<ISub>(subName ? `/subs/${subName}` : null);
-
+  
   useEffect(() => {
     if (!sub) return
     setOwnSub(authenticated && user.username === sub.username)
@@ -117,6 +118,7 @@ export default function Sub(){
             <section className="w-160">
               {postsMarkup}
             </section>
+            <Sidebar sub={sub} />
           </div>
         </Fragment> 
       )}
