@@ -30,6 +30,8 @@ app.use(
 	})
 );
 
+app.use(express.static("public"));
+
 app.get("/", (_, res) => res.send("Hollow world"));
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
