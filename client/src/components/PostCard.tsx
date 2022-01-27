@@ -34,7 +34,7 @@ export default function PostCard({ post: { identifier, slug, title, body, subNam
   return (
     <article key={identifier} className='flex mb-4 bg-white rounded'>
     {/* Vote Section */}
-    <div className="w-10 py-3 text-center bg-gray-200 rounded-l">
+    <aside className="w-10 py-3 text-center bg-gray-200 rounded-l">
       {/* Upvote */}
       <div className="w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-red-500" onClick={() => handleVote(1)}>
         <i className={`icon-arrow-up ` + (userVote === 1 && `text-red-500`)}></i>
@@ -44,10 +44,10 @@ export default function PostCard({ post: { identifier, slug, title, body, subNam
       <div className="w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-blue-600" onClick={() => handleVote(-1)}>
       <i className={`icon-arrow-down ` + (userVote === -1 && `text-blue-600`)}></i>
       </div>
-    </div>
+    </aside>
     {/* Post data section */}
-    <div className="w-full p-2">
-      <div className="flex items-center">
+    <section className="w-full p-2">
+      <header className="flex items-center">
         <Link href={`/r/${subName}`}>
           <a className='flex items-center cursor-pointer'>
             <img src='https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y' className='w-6 h-6 mr-1 rounded-full' alt={`${username} profile image`} />
@@ -70,14 +70,14 @@ export default function PostCard({ post: { identifier, slug, title, body, subNam
             </a>
           </Link>
         </p>
-      </div>
+      </header>
       <Link href={url} passHref>
         <a className="my-1 text-lg font-medium">{title}</a>
       </Link>
       {body && 
         <p className='my-1 text-sm'>{body}</p>
       }
-      <div className="flex">
+      <footer className="flex">
         <Link href={url}>
           <a>
             <ActionButton>
@@ -94,8 +94,8 @@ export default function PostCard({ post: { identifier, slug, title, body, subNam
           <i className="mr-1 fas fa-bookmark fa-xs"></i>
           <span className='font-bold'>Save</span>
         </ActionButton>
-      </div>
-    </div>
+      </footer>
+    </section>
   </article>
   );
 }
