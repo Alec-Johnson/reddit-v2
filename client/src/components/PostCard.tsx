@@ -1,24 +1,21 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { Post } from '../types';
 import axios from 'axios';
 
-dayjs.extend(relativeTime);
+import ActionButton from './ActionButton';
+import { Post } from '../types';
 
-const ActionButton = ({ children}) => {
-  return <div className='px-1 py-1 mr-2 text-xs text-gray-400 rounded cursor-pointer hover:bg-gray-200'>
-    {children}
-  </div>
-}
+dayjs.extend(relativeTime);
 
 interface PostCardProps {
   post: Post;
 }
 
 export default function PostCard({ post: { identifier, slug, title, body, subName, createdAt, voteScore, userVote, commentCount, url, username } }: PostCardProps) {
-  const handleVote = async (value) => {
+  const handleVote = async (value: number) => {
     try {
       const res = await axios.post('/misc/vote', {
         identifier,
@@ -50,8 +47,8 @@ export default function PostCard({ post: { identifier, slug, title, body, subNam
       <header className="flex items-center">
         <Link href={`/r/${subName}`}>
           <a className='flex items-center cursor-pointer'>
-            <img src='https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y' className='w-6 h-6 mr-1 rounded-full' alt={`${username} profile image`} />
-            <span className='text-xs font-bold cursor-pointer hover:underline'>
+            <Image src='https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y' height={24} width={24} className='rounded-full ' alt={`${username} profile image`} />
+            <span className='ml-1 text-xs font-bold cursor-pointer hover:underline'>
               r/{subName}
             </span>
           </a>
