@@ -62,7 +62,7 @@ export default class Post extends Entity {
 
 	// Virtual fields
 	@Expose() get url(): string {
-		return `/r/${this.subName}/${this.slug}`;
+		return `/r/${this.subName}/${this.identifier}/${this.slug}`;
 	}
 
 	@Expose() get commentCount(): number {
