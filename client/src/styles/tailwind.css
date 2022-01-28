@@ -16,4 +16,13 @@
   .button.blue.empty {
     @apply text-blue-500 bg-transparent border-blue-500;
   }
+  .upvote {
+    @apply hover:text-red-500;
+  }
+  .downvote {
+    @apply hover:text-blue-600;
+  }
+  .upvote, .downvote {
+    @apply w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 
+  }
 }
