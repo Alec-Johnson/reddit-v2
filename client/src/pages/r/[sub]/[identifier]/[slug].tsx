@@ -54,6 +54,7 @@ export default function PostPage() {
       console.log(err)
     }
   }
+  
   return (
     <>
       <Head>
@@ -61,20 +62,20 @@ export default function PostPage() {
       </Head>
       <Link href={`/r/${sub}`}>
         <a>
+          {post && (
           <div className="flex items-center w-full h-20 p-8 bg-blue-500">
             <div className="container flex">
-              {post && (
-                <div className="w-8 h-8 mr-2 overflow-hidden rounded-full">
-                  <Image
-                    src={post.sub.imageUrl}
-                    height={32}
-                    width={32}
-                  />
-                </div>
-              )}
+              <div className="w-8 h-8 mr-2 overflow-hidden rounded-full">
+                <Image
+                  src={post.sub.imageUrl}
+                  height={32}                    
+                  width={32}
+                />
+              </div>
               <p className="text-xl font-semibold text-white">/r/{sub}</p>
             </div>
           </div>
+          )}
         </a>
       </Link>
       <div className="container flex pt-5 ">
@@ -84,10 +85,8 @@ export default function PostPage() {
             {post && (
               <>
                 <SinglePost vote={vote} post={post} />
-                {/* Comment input area */}
-                <CommentInput mutate={mutate} username={user.username} authenticated={authenticated} identifier={post.identifier} slug={post.slug}  />
+                <CommentInput mutate={mutate} username={user?.username} authenticated={authenticated} identifier={post.identifier} slug={post.slug}  />
                 <hr />
-                {/* Comments feed */}
                 {comments?.map((comment) => (
                   <CommentsFeed vote={vote} comment={comment} key={comment.identifier} />
                 ))}

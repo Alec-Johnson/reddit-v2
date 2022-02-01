@@ -56,7 +56,7 @@ export default function Sub(){
   
   if (error) router.push('/')
 
-  let postsMarkup;
+  let postsMarkup: JSX.Element[] | JSX.Element;
   if (!sub) {
     postsMarkup = <p>Loading...</p>
   } else if (sub.posts.length === 0) {

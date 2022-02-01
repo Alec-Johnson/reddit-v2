@@ -13,7 +13,7 @@ interface State {
 
 interface Action {
   type: string
-  payload: any
+  payload: User | undefined
 }
 
 const StateContext = createContext<State>({

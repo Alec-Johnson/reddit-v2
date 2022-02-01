@@ -1,9 +1,10 @@
-import axios from 'axios';
 import Link from 'next/link';
 import React, { FormEvent, useState } from 'react';
+
+import axios from 'axios';
 import { KeyedMutator } from 'swr';
 
-import { Comment, Post, User } from '../types';
+import { Comment } from '../types';
 
 interface CommentInputProps {
   authenticated: boolean;
