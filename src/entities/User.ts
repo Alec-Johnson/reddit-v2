@@ -7,7 +7,7 @@ import {
 } from "typeorm";
 import bcrypt from "bcrypt";
 import { IsEmail, Length } from "class-validator";
-import { Exclude } from "class-transformer";
+import { Exclude, Expose } from "class-transformer";
 
 import Entity from "./Entity";
 import Post from "./Post";
@@ -38,6 +38,9 @@ export default class User extends Entity {
 	@Length(6, 255, { message: "Must be at least 6 characters" })
 	password: string;
 
+	@Column({ nullable: true })
+	imageUrn: string;
+
 	@OneToMany(() => Post, (post) => post.author)
 	posts: Post[];
 
@@ -47,5 +50,12 @@ export default class User extends Entity {
 	@BeforeInsert()
 	async hashPassword() {
 		this.password = await bcrypt.hash(this.password, 7);
+	}
+
+	@Expose()
+	get imageUrl(): string {
+		return this.imageUrn
+			? `${process.env.APP_URL}/images/${this.imageUrn}`
+			: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y";
 	}
 }
