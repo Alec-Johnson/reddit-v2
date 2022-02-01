@@ -1,6 +1,9 @@
-import dayjs from 'dayjs';
 import Link from 'next/link';
-import React from 'react';
+
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
 import { Comment } from '../types';
 
 interface CommentsFeedProps {
