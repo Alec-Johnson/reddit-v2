@@ -1,10 +1,11 @@
 import { AppProps } from "next/dist/shared/lib/router/router";
-import axios from 'axios'
 import { useRouter } from "next/router";
+
+import axios from 'axios'
 import { SWRConfig } from 'swr'
+import { ThemeProvider } from "next-themes";
 
-import { AuthProvider } from '../context/auth'
-
+import { AuthContextProvider } from "../context/auth-context";
 import Navbar from '../components/Navbar'
 
 import "../styles/tailwind.css";
@@ -32,13 +33,15 @@ function MyApp({ Component, pageProps }: AppProps) {
 			fetcher,
 			dedupingInterval: 10000,
 		}}>
-			<AuthProvider>
+			<AuthContextProvider>
+				<ThemeProvider attribute="class" disableTransitionOnChange>
 				{!isAuthRoute && <Navbar />}
 				<main className={isAuthRoute ? '' : 'pt-12'}>
 					<Component {...pageProps} />
 				</main>
-			</AuthProvider>
-	</SWRConfig>
+				</ThemeProvider>
+			</AuthContextProvider>
+		</SWRConfig>
 	)
 }
 

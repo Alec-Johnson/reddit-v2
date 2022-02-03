@@ -1,10 +1,13 @@
-import dayjs from "dayjs";
-import { Sub } from "../types";
-import  { useAuthState } from "../context/auth";
+import { useContext } from "react";
 import Link from "next/link";
 
+import dayjs from "dayjs";
+
+import { AuthContext } from "../context/auth-context";
+import { Sub } from "../types";
+
 export default function Sidebar({ sub }: {sub: Sub}) {
-  const { authenticated } =  useAuthState();
+  const { authenticated } =  useContext(AuthContext);
   
   return <aside className='ml-6 w-80'>
     <div className="bg-white rounded">

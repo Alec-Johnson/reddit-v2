@@ -1,12 +1,13 @@
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { ChangeEvent, createRef, Fragment, useEffect, useState } from "react";
+import { ChangeEvent, createRef, Fragment, useContext, useEffect, useState } from "react";
 
 import axios from "axios";
 import useSWR from "swr";
 
-import { useAuthState } from '../../context/auth';
+import { AuthContext } from "../../context/auth-context";
+
 import PostCard from "../../components/PostCard";
 import Sidebar from "../../components/Sidebar";
 import { Post, Sub as ISub } from "../../types";
@@ -16,7 +17,7 @@ export default function Sub(){
   // Local state
   const [ownSub, setOwnSub] = useState(false);
   // Global state
-  const { authenticated, user } = useAuthState();
+  const { authenticated, user } = useContext(AuthContext);
   // Utils
   const router = useRouter();
   const fileUploadRef = createRef<HTMLInputElement>();
@@ -29,6 +30,8 @@ export default function Sub(){
   useEffect(() => {
     if (!sub) return
     setOwnSub(authenticated && user.username === sub.username)
+    console.log(sub);
+    
   }, [sub])
 
   const openFileUpload = (type: string) => {
@@ -50,7 +53,7 @@ export default function Sub(){
       })
       mutate()
     } catch (err) {
-      console.log(err);
+      throw new Error(`Upload failed, ${err}`);
     }
   }
   
@@ -78,7 +81,7 @@ export default function Sub(){
           {/* Sub info & images */}
           <header>
             {/* Banner image */}
-            <div className={`bg-blue-500 ${ownSub && 'cursor-pointer'}`}  onClick={() => openFileUpload('banner')}>
+            <div className={`bg-blue-500 ${ownSub && 'cursor-pointer'}`}>
               {sub.bannerUrl ? (
                 <div className="relative w-full h-56">
                   <Image 
@@ -98,7 +101,7 @@ export default function Sub(){
               <div className="container relative flex" style={{ top: -15 }}>
                 <Image 
                   src={sub.imageUrl}
-                  alt='Sub'
+                  alt='Sub image'
                   className={`absolute rounded-full ${ownSub && 'cursor-pointer'}`}
                   onClick={() => openFileUpload('image')}
                   width={80}

@@ -1,16 +1,16 @@
-import axios from "axios";
-
 import Head from "next/head";
 import Link from 'next/link';
 import { useRouter } from 'next/router'
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 
+import axios from "axios";
+
+import { AuthContext } from "../context/auth-context";
 import InputGroup from "../components/InputGroup";
-import { useAuthState } from "../context/auth";
 
 export default function Register() {
   const router = useRouter();
-  const { authenticated } = useAuthState();
+  const { authenticated } = useContext(AuthContext);
 
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -26,7 +26,6 @@ export default function Register() {
 
       router.push('/login')
     } catch (err) {
-      console.log(err);
       setErrors(err.response.data)
     }
   }

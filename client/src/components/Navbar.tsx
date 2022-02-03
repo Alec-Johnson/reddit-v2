@@ -1,19 +1,24 @@
+import { useContext } from "react";
 import Link from "next/link"
-import RedditLogo from '../images/reddit.svg'
-import { useAuthState, useAuthDispatch } from "../context/auth";
+
 import axios from "axios";
 
-const Navbar = () => {
-  const { authenticated, loading } = useAuthState()
-  const disptach = useAuthDispatch()
+import ThemeChanger from "./ThemeChanger";
+import RedditLogo from '../images/reddit.svg'
+import { AuthContext } from "../context/auth-context";
+
+export default function Navbar(){
+  const { authenticated, loading, dispatch } = useContext(AuthContext)
 
   const handleLogout = () => {
     axios.get("/auth/logout")
       .then(() => {
-        disptach('LOGOUT')
+        dispatch({ type: 'LOGOUT' })
         window.location.reload()
       })
-      .catch(err => console.log(err))
+      .catch(
+        err => {throw new Error(`Logout failed, ${err}`)}
+      )
   }
 
   return (
@@ -26,14 +31,17 @@ const Navbar = () => {
         <h1 className='text-2xl font-semibold'>
           <Link href='/'>reddit v2</Link>
         </h1>
+        <ThemeChanger />
       </header>
       {/* Search input */}
       <div className="flex items-center mx-auto bg-gray-100 border rounded hover:border-blue-500 hover:bg-white">
         <i className='pl-4 pr-3 text-gray-500 fas fa-search'/>
         <input type="text" className='py-1 pr-3 bg-transparent rounded w-160 focus:outline-none' placeholder='Search'/>
       </div>
+     
       {/* Auth buttons */}
       <div className="flex">
+      
         {!loading && authenticated ? (
           <button className="w-32 py-1 mr-4 leading-5 empty blue button" onClick={handleLogout}>
             Logout
@@ -52,5 +60,3 @@ const Navbar = () => {
     </nav>
   )
 }
-
-export default Navbar

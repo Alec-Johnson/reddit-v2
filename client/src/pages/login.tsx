@@ -2,16 +2,15 @@ import axios from "axios";
 import Head from "next/head";
 import Link from 'next/link';
 import { useRouter } from 'next/router'
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 
 import InputGroup from "../components/InputGroup";
 
-import { useAuthDispatch, useAuthState } from "../context/auth";
+import { AuthContext } from "../context/auth-context";
 
 export default function Login() {
   const router = useRouter();
-  const dispatch = useAuthDispatch();
-  const { authenticated } = useAuthState();
+  const { authenticated, dispatch } = useContext(AuthContext);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -23,10 +22,9 @@ export default function Login() {
       const res = await axios.post('/auth/login', {
         username, password
       })
-      dispatch('LOGIN', res.data)
+      dispatch({type: 'LOGIN', payload: res.data})
       router.back()
     } catch (err) {
-      console.log(err);
       setErrors(err.response.data)
     }
   }

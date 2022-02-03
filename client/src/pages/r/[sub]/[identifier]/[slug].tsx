@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -6,7 +7,7 @@ import Image from 'next/image'
 import useSWR from 'swr'
 import axios from 'axios'
 
-import { useAuthState } from '../../../../context/auth'
+import { AuthContext } from '../../../../context/auth-context'
 import Sidebar from '../../../../components/Sidebar'
 import SinglePost from '../../../../components/SinglePost'
 import CommentsFeed from '../../../../components/CommentsFeed'
@@ -15,7 +16,7 @@ import { Post, Comment } from '../../../../types'
 
 export default function PostPage() {
   // Global state
-  const { authenticated, user } = useAuthState()
+  const { authenticated, user } = useContext(AuthContext)
   // Utils
   const router = useRouter()
   const { identifier, sub, slug } = router.query
