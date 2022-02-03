@@ -1,20 +1,22 @@
+import { Dispatch, SetStateAction } from "react";
+
 interface InputGroupProps {
   className?: string;
   type: string;
   placeholder: string;
   value: string;
   error: string | undefined;
-  setValue: (str: string) => void;
+  setValue: Dispatch<SetStateAction<string>>;
 }
 
-const InputGroup = ({
+export default function InputGroup({
   className,
   type,
   placeholder,
   value,
   error,
   setValue,
-}: InputGroupProps) => {
+}: InputGroupProps) {
   return (
     <>
       <input className={`w-full p-3 transition duration-200 border border-gray-300 rounded outline-none bg-gray-50 focus:bg-white hover:bg-white 
@@ -28,5 +30,3 @@ const InputGroup = ({
     </>
   )
 }
-
-export default InputGroup;

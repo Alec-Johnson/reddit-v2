@@ -7,7 +7,6 @@ import axios from 'axios';
 
 import ActionButton from './ActionButton';
 import { Post } from '../types';
-import { mutate } from 'swr';
 
 dayjs.extend(relativeTime);
 
@@ -20,14 +19,13 @@ export default function PostCard({ post }: PostCardProps) {
 
   const handleVote = async (value: number) => {
     try {
-      const res = await axios.post('/misc/vote', {
+      await axios.post('/misc/vote', {
         identifier,
         slug,
         value
-      })
-      console.log(res.data)
+      });
     } catch(err) {
-      console.log(err);
+      throw new Error(`Vote failed, ${err}`);
     }
   }
   
@@ -50,7 +48,9 @@ export default function PostCard({ post }: PostCardProps) {
         <header className="flex items-center">
           <Link href={`/r/${subName}`}>
             <a className='flex items-center cursor-pointer'>
-              <Image src={sub.imageUrl ?? 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'} height={24} width={24} className='rounded-full ' alt={`${username} profile image`} />
+              {sub &&
+                <Image src={sub.imageUrl} placeholder='empty' height={24} width={24} className='rounded-full ' alt={`${username} profile image`} />
+              }
               <span className='ml-1 text-xs font-bold cursor-pointer hover:underline'>
                 r/{subName}
               </span>

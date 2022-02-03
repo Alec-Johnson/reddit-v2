@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
+
 import { Comment } from '../types';
 
 export default function CommentCard({ comment }: { comment: Comment }) {

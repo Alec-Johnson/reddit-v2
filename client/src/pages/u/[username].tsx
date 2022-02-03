@@ -1,10 +1,10 @@
-import axios from "axios";
-import dayjs from "dayjs";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { ChangeEvent, createRef } from "react";
 
+import dayjs from "dayjs";
+import axios from "axios";
 import useSWR from "swr";
 
 import CommentCard from "../../components/CommentCard";

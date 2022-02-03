@@ -1,13 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
+
+import useSWR from 'swr'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import useSWR from 'swr'
-
 import { Post, Sub } from '../types'
-
 import PostCard from '../components/PostCard'
-import Link from 'next/link'
 
 dayjs.extend(relativeTime);
 
@@ -23,7 +22,7 @@ export default function Home() {
       <div className="container flex pt-4">
         {/* Posts feed */}
         <section className="w-160">
-          {posts?.map(post => (
+          {posts && posts.map(post => (
             <PostCard post={post} key={post.identifier} />
           ))}
         </section>

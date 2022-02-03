@@ -1,9 +1,10 @@
-import axios from "axios";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
+
 import useSWR from "swr";
+import axios from "axios";
 
 import Sidebar from "../../../components/Sidebar";
 import { Post, Sub } from "../../../types";

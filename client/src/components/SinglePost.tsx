@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { Comment, Post } from "../types";
-import ActionButton from "./ActionButton";
 
 import dayjs from 'dayjs';
+
+import { Post } from "../types";
+import ActionButton from "./ActionButton";
 
 interface SinglePostProps {
   vote: (value: number) => Promise<void>;

@@ -29,7 +29,7 @@ export default function CommentInput({ authenticated, username, mutate, identifi
       setNewComment('')
       mutate()
     } catch (err) {
-      console.log(err)
+      throw new Error(`Submit comment failed, ${err}`);
     }
   }
 
