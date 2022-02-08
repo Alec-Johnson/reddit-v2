@@ -1,14 +1,23 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link"
+import Image from "next/image";
 
 import axios from "axios";
 
 import ThemeChanger from "./ThemeChanger";
 import RedditLogo from '../images/reddit.svg'
 import { AuthContext } from "../context/auth-context";
+import { Sub } from "../types";
+import { useRouter } from "next/router";
 
 export default function Navbar(){
+  const [name, setName] = useState('')
+  const [subs, setSubs] = useState<Sub[]>([])
+  const [timer, setTimer] = useState(null);
+
   const { authenticated, loading, dispatch } = useContext(AuthContext)
+
+  const router = useRouter()
 
   const handleLogout = () => {
     axios.get("/auth/logout")
@@ -19,6 +28,36 @@ export default function Navbar(){
       .catch(
         err => {throw new Error(`Logout failed, ${err}`)}
       )
+  }
+
+  useEffect(() => {
+    if (name.trim() === '') {
+      setSubs([])
+      return
+    }
+
+    handleSearchSubs()
+  }, [name]);
+  
+
+  const handleSearchSubs = async () => {
+    clearTimeout(timer)
+    setTimer(setTimeout(async () => {
+      try {
+        const { data } = await axios.get(`/subs/search/${name}`)
+        setSubs(data)
+        console.log(data);
+        
+      } catch (err) {
+        throw new Error(`Search failed, ${err}`)
+      }
+    }, 300))
+  }
+
+  const goToSub = (sub: string) => {
+    router.push(`/r/${sub}`)
+    // Clear search bar after sub is selected
+    setName('')
   }
 
   return (
@@ -34,9 +73,20 @@ export default function Navbar(){
         <ThemeChanger />
       </header>
       {/* Search input */}
-      <div className="flex items-center mx-auto bg-gray-100 border rounded hover:border-blue-500 hover:bg-white">
+      <div className="relative flex items-center mx-auto bg-gray-100 border rounded hover:border-blue-500 hover:bg-white">
         <i className='pl-4 pr-3 text-gray-500 fas fa-search'/>
-        <input type="text" className='py-1 pr-3 bg-transparent rounded w-160 focus:outline-none' placeholder='Search'/>
+        <input type="text" className='py-1 pr-3 bg-transparent rounded w-160 focus:outline-none' placeholder='Search' value={name} onChange={e => setName(e.target.value)} />
+        <div className="absolute left-0 right-0 bg-white top-full" >
+          {subs?.map(sub => (
+            <div className="flex items-center px-4 py-3 cursor-pointer hover:bg-gray-200" key={sub.name} onClick={() => goToSub(sub.name)}>
+              <Image src={sub.imageUrl} alt='Sub' height={32} width={32} className='rounded-full' />
+              <div className="ml-4 text-sm">
+                <p className="font-medium">{sub.name}</p>
+                <p className="text-gray-600">{sub.title}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
      
       {/* Auth buttons */}

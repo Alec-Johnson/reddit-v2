@@ -12,7 +12,7 @@ dayjs.extend(relativeTime);
 
 export default function Home() {
   const { data: posts } = useSWR<Post[]>('/posts')
-  const { data: topSubs } = useSWR('/misc/top-subs')
+  const { data: topSubs } = useSWR<Sub[]>('/misc/top-subs')
 
   return (
     <>
@@ -35,11 +35,13 @@ export default function Home() {
               </h2>
             </header>
             <section>
-              {topSubs?.map((sub: Sub) => (
+              {topSubs?.map((sub) => (
                 <article key={sub.name} className="flex items-center px-4 py-2 text-xs border-b">
                   <div className='mr-2 cursor-pointer'>
                     <Link href={`/r/${sub.name}`}>
-                      <Image src={sub.imageUrl} alt="Sub" width={24} height={24}  className="rounded-full"/>
+                      <a>
+                        <Image src={sub.imageUrl} alt="Sub" width={24} height={24}  className="rounded-full"/>
+                      </a>
                     </Link>
                   </div>
                   <Link href={`/r/${sub.name}`}>
