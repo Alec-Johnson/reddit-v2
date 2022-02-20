@@ -7,12 +7,16 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { Post, Sub } from '../types'
 import PostCard from '../components/PostCard'
+import { useContext } from 'react'
+import { AuthContext } from '../context/auth-context'
 
 dayjs.extend(relativeTime);
 
 export default function Home() {
   const { data: posts } = useSWR<Post[]>('/posts')
   const { data: topSubs } = useSWR<Sub[]>('/misc/top-subs')
+
+  const { authenticated } = useContext(AuthContext)
 
   return (
     <>
@@ -21,13 +25,13 @@ export default function Home() {
       </Head>
       <div className="container flex pt-4">
         {/* Posts feed */}
-        <section className="w-160">
+        <section className="w-full px-4 md:w-160 md:p-0">
           {posts && posts.map(post => (
             <PostCard post={post} key={post.identifier} />
           ))}
         </section>
         {/* Sidebar */}
-        <aside className='ml-6 w-80'>
+        <aside className='hidden ml-6 md:block w-80'>
           <div className="bg-white rounded">
             <header className="p-4 border-b-2">
               <h2 className="text-lg font-semibold text-center">
@@ -51,6 +55,15 @@ export default function Home() {
                 </article>
               ))}
             </section>
+            {authenticated && 
+              <aside className="p-4 border-t-2">
+                <Link href="/subs/create">
+                  <a className="w-full px-2 py-1 blue button">
+                    Create Community
+                  </a>
+                </Link>
+              </aside>
+            }
           </div>
         </aside>
       </div>
