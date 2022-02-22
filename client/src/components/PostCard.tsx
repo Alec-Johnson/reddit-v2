@@ -1,5 +1,7 @@
+import { useContext } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -7,30 +9,44 @@ import axios from 'axios';
 
 import ActionButton from './ActionButton';
 import { Post } from '../types';
+import { AuthContext } from '../context/auth-context';
 
 dayjs.extend(relativeTime);
 
 interface PostCardProps {
   post: Post;
+  mutate: Function;
 }
 
-export default function PostCard({ post }: PostCardProps) {
+export default function PostCard({ post, mutate }: PostCardProps) {
   const { identifier, slug, title, body, subName, createdAt, voteScore, userVote, sub, commentCount, url, username } = post;
+  const { authenticated } = useContext(AuthContext);
+
+  const router = useRouter()
+
+  const isInSubPage = router.pathname === '/r/[sub]';
 
   const handleVote = async (value: number) => {
+    if(!authenticated) router.push('/login')
+
+    if (
+      (value === post.userVote)
+    ) { value = 0 }
+    
     try {
       await axios.post('/misc/vote', {
         identifier,
         slug,
         value
       });
+      if (mutate) mutate()
     } catch(err) {
-      throw new Error(`Vote failed, ${err}`);
+      console.log(`Vote failed, ${err}`);
     }
   }
   
   return (
-    <article key={identifier} className='flex mb-4 bg-white rounded'>
+    <article key={identifier} id={identifier} className='flex mb-4 bg-white rounded'>
       {/* Vote Section */}
       <aside className="w-10 py-3 text-center bg-gray-200 rounded-l">
         {/* Upvote */}
@@ -46,18 +62,22 @@ export default function PostCard({ post }: PostCardProps) {
       {/* Post data section */}
       <section className="w-full p-2">
         <header className="flex items-center">
-          <Link href={`/r/${subName}`}>
-            <a className='flex items-center cursor-pointer'>
-              {sub &&
-                <Image src={sub.imageUrl} placeholder='empty' height={24} width={24} className='rounded-full ' alt={`${username} profile image`} />
-              }
-              <span className='ml-1 text-xs font-bold cursor-pointer hover:underline'>
-                r/{subName}
-              </span>
-            </a>
-          </Link>
+          {!isInSubPage && (
+            <>
+              <Link href={`/r/${subName}`}>
+                <a className='flex items-center cursor-pointer'>
+                  {sub &&
+                    <Image src={sub.imageUrl} placeholder='empty' height={24} width={24} className='rounded-full ' alt={`${username} profile image`} />
+                  }
+                  <span className='ml-1 text-xs font-bold cursor-pointer hover:underline'>
+                    r/{subName}
+                  </span>
+                </a>
+              </Link>
+              <span className="mx-1 text-xs text-gray-600">•</span>
+            </>
+          )}
           <p className="text-xs text-gray-600">
-            <span className="mx-1">•</span>
             Posted by 
             <Link href={`/u/${username}`}>
               <a className='mx-1 hover:underline'>

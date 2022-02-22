@@ -30,8 +30,6 @@ export default function Sub(){
   useEffect(() => {
     if (!sub) return
     setOwnSub(authenticated && user.username === sub.username)
-    console.log(sub);
-    
   }, [sub])
 
   const openFileUpload = (type: string) => {
@@ -66,7 +64,7 @@ export default function Sub(){
     postsMarkup = <p>Nothing has been submitted yet</p>
   } else {
     postsMarkup = sub.posts.map((post: Post) => (
-      <PostCard key={post.identifier} post={post} />
+      <PostCard key={post.identifier} post={post} mutate={mutate} />
     ))
   }
 

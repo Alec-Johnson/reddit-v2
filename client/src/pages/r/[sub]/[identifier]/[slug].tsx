@@ -21,12 +21,12 @@ export default function PostPage() {
   const router = useRouter()
   const { identifier, sub, slug } = router.query
 
-  const { data: post, error } = useSWR<Post>(
+  const { data: post, error, mutate: mutatePost } = useSWR<Post>(
     (identifier && slug) ? `/posts/${identifier}/${slug}` : null
   )
 
-  const { data: comments, mutate } = useSWR<Comment[]>(
-    identifier && slug ? `/posts/${identifier}/${slug}/comments` : null
+  const { data: comments, mutate: mutateComment } = useSWR<Comment[]>(
+    (identifier && slug) ? `/posts/${identifier}/${slug}/comments` : null
   )
 
   if (error) router.push('/')
@@ -50,7 +50,7 @@ export default function PostPage() {
         value,
       })
 
-      mutate()
+      if (!comment) { mutatePost() } else { mutateComment() }
     } catch (err) {
       console.log(err)
     }
@@ -86,7 +86,7 @@ export default function PostPage() {
             {post && (
               <>
                 <SinglePost vote={vote} post={post} />
-                <CommentInput mutate={mutate} username={user?.username} authenticated={authenticated} identifier={post.identifier} slug={post.slug}  />
+                <CommentInput mutate={mutateComment} username={user?.username} authenticated={authenticated} identifier={post.identifier} slug={post.slug}  />
                 <hr />
                 {comments?.map((comment) => (
                   <CommentsFeed vote={vote} comment={comment} key={comment.identifier} />
