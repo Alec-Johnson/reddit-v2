@@ -36,7 +36,7 @@ export default function Login() {
       <Head>
         <title>Login</title>
       </Head>
-      <div className="h-screen bg-cover w-36" style={{ backgroundImage: "url('/images/rocks.jpg')"}}>
+      <div className="h-screen bg-cover w-36" style={{ backgroundImage: `url('${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/images/rocks.jpg')`}}>
       </div>
       <div className="flex flex-col justify-center pl-6 w-72">
         <h1 className="mb-2 text-lg">Login</h1>
