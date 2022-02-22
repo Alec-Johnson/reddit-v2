@@ -15,7 +15,7 @@ dayjs.extend(relativeTime);
 
 interface PostCardProps {
   post: Post;
-  mutate: Function;
+  mutate?: Function;
 }
 
 export default function PostCard({ post, mutate }: PostCardProps) {

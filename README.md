@@ -35,3 +35,5 @@ User makes a GET request once logged in and verifies they are authenticated.
 
 ## Database
 https://drawsql.app/a-32/diagrams/reddit-clone-postgresql/embed
+
+# Deployment

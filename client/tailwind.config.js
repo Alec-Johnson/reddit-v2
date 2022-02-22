@@ -1,6 +1,6 @@
 module.exports = {
   purge: ['./src/**/*.tsx'],
-  darkMode: false,
+  darkMode: 'class',
   theme: {
     fontFamily: {
       body: ['IBM Plex Sans', 'sans-serif'],

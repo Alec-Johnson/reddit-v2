@@ -6,3 +6,5 @@ tmp/
 temp/
 ormconfig.json
 package-lock.json
+/**/*.env
+public/
