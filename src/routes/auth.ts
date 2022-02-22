@@ -84,7 +84,7 @@ const login = async (req: Request, res: Response) => {
 			"Set-Cookie",
 			cookie.serialize("token", token, {
 				httpOnly: true, // Can't be accessed by the client, more secure
-				secure: process.env.NODE_ENV === "production", // Only send the cookie over HTTPS
+				// secure: process.env.NODE_ENV === "production", // Only send the cookie over HTTPS
 				sameSite: "strict", // Cookie should only come from our domain
 				maxAge: 3600, // Cookie will expire after 1 hour
 				path: "/", // Valid across all paths, default is /api/auth
@@ -109,7 +109,7 @@ const logout = (_: Request, res: Response) => {
 		"Set-Cookie",
 		cookie.serialize("token", "", {
 			httpOnly: true,
-			secure: process.env.NODE_ENV === "production",
+			// secure: process.env.NODE_ENV === "production",
 			sameSite: "strict",
 			expires: new Date(0), // Cookie will expire immediately
 			path: "/",
