@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -15,6 +15,8 @@ import CommentInput from '../../../../components/CommentInput'
 import { Post, Comment } from '../../../../types'
 
 export default function PostPage() {
+  // Local state
+  const [description, setDescription] = useState('')
   // Global state
   const { authenticated, user } = useContext(AuthContext)
   // Utils
@@ -30,6 +32,13 @@ export default function PostPage() {
   )
 
   if (error) router.push('/')
+
+  useEffect(() => {
+    if (!post) return
+    let desc = post.body || post.title
+    desc = desc.substring(0, 158).concat('..') // {Description}..
+    setDescription(desc)
+  }, [post])
 
   const vote = async (value: number, comment?: Comment) => {
     // If not logged in go to login
@@ -60,6 +69,11 @@ export default function PostPage() {
     <>
       <Head>
         <title>{post?.title}</title>
+        <meta name="description" content={description} />
+        <meta property="og:description" content={description} />
+        <meta property="og:title" content={post?.title} />
+        <meta property="twitter:description" content={description} />
+        <meta property="twitter:title" content={post?.title} />
       </Head>
       <Link href={`/r/${sub}`}>
         <a>

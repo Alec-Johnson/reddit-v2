@@ -14,8 +14,6 @@ export default function Home() {
   const [observedPost, setObservedPost] = useState(null)
   const { data: topSubs } = useSWR<Sub[]>('/misc/top-subs')
 
-  const { authenticated } = useContext(AuthContext)
-
   const {
     data,
     error,
@@ -26,6 +24,11 @@ export default function Home() {
   } = useSWRInfinite<Post[]>((index) => `/posts?page=${index}`, {
     revalidateAll: true
   })
+  
+  const description = "Reddit V2 is a network of communities based on people's interests. Find communities you are interested in and interact with people around the world!"
+  const title = "Reddit V2: the front page of the internet"
+
+  const { authenticated } = useContext(AuthContext)
 
   const isInitialLoading = !data && !error
   const posts: Post[] = data ? [].concat(...data) : []
@@ -58,7 +61,12 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Reddit V2: the front page of the internet</title>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta property="og:description" content={description} />
+        <meta property="og:title" content={title} />
+        <meta property="twitter:description" content={description} />
+        <meta property="twitter:title" content={title} />
       </Head>
       <div className="container flex pt-4">
         {/* Posts feed */}

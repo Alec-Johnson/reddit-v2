@@ -10,6 +10,13 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <link rel='icon' type='image/svg+xml' href='/reddit.svg'/>
+          <meta property="og:site_name" content="Reddit V2" />
+          {/* <meta property="twitter:site" content="@RedditV2" /> */}
+          <meta property="twitter:card" content="summary" />
+          <meta property="og:type" content="website" />
+          <meta property="og:image" content={`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/reddit.svg`} />
+          <meta property="twitter:image" content={`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/reddit.svg`} />
           <link rel="preconnect" href="https://fonts.googleapis.com"/>
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='true'/>
           <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet"/>

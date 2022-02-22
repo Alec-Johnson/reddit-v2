@@ -72,6 +72,11 @@ export default function Sub(){
     <div>
       <Head>
         <title>{sub?.title}</title>
+        <meta name="description" content={sub?.description} />
+        <meta property="og:description" content={sub?.description} />
+        <meta property="og:title" content={sub?.title} />
+        <meta property="twitter:description" content={sub?.description} />
+        <meta property="twitter:title" content={sub?.title} />
       </Head>
       {sub && (
         <Fragment>
