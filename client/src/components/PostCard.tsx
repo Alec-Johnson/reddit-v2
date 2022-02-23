@@ -46,9 +46,9 @@ export default function PostCard({ post, mutate }: PostCardProps) {
   }
   
   return (
-    <article key={identifier} id={identifier} className='flex mb-4 bg-white rounded'>
+    <article key={identifier} id={identifier} className='flex mb-4 bg-white rounded dark:bg-slate-600'>
       {/* Vote Section */}
-      <aside className="w-10 py-3 text-center bg-gray-200 rounded-l">
+      <aside className="w-10 py-3 text-center bg-gray-200 rounded-l dark:bg-slate-500">
         {/* Upvote */}
         <div className="upvote" onClick={() => handleVote(1)}>
           <i className={`icon-arrow-up ` + (userVote === 1 && `text-red-500`)}></i>
@@ -69,15 +69,15 @@ export default function PostCard({ post, mutate }: PostCardProps) {
                   {sub &&
                     <Image src={sub.imageUrl} placeholder='empty' height={24} width={24} className='rounded-full ' alt={`${username} profile image`} />
                   }
-                  <span className='ml-1 text-xs font-bold cursor-pointer hover:underline'>
+                  <span className='ml-1 text-xs font-bold cursor-pointer hover:underline dark:text-gray-300'>
                     r/{subName}
                   </span>
                 </a>
               </Link>
-              <span className="mx-1 text-xs text-gray-600">•</span>
+              <span className="mx-1 text-xs text-gray-600 dark:text-gray-300">•</span>
             </>
           )}
-          <p className="text-xs text-gray-600">
+          <p className="text-xs text-gray-600 dark:text-gray-400">
             Posted by 
             <Link href={`/u/${username}`}>
               <a className='mx-1 hover:underline'>
@@ -85,17 +85,17 @@ export default function PostCard({ post, mutate }: PostCardProps) {
               </a>
             </Link>
             <Link href={url}>
-              <a className='mx-1 hover:underline'>
+              <a className='hover:underline'>
                 {dayjs(createdAt).fromNow()}
               </a>
             </Link>
           </p>
         </header>
         <Link href={url} passHref>
-          <a className="my-1 text-lg font-medium">{title}</a>
+          <a className="my-1 text-lg font-medium dark:text-gray-300">{title}</a>
         </Link>
         {body && 
-          <p className='my-1 text-sm'>{body}</p>
+          <p className='my-1 text-sm dark:text-gray-300'>{body}</p>
         }
         <footer className="flex">
           <Link href={url}>

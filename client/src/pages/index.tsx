@@ -14,6 +14,7 @@ export default function Home() {
   const [observedPost, setObservedPost] = useState(null)
   const { data: topSubs } = useSWR<Sub[]>('/misc/top-subs')
 
+  // https://swr.vercel.app/docs/pagination#useswrinfinite
   const {
     data,
     error,
@@ -81,15 +82,15 @@ export default function Home() {
         </section>
         {/* Sidebar */}
         <aside className='hidden ml-6 md:block w-80'>
-          <div className="bg-white rounded">
-            <header className="p-4 border-b-2">
-              <h2 className="text-lg font-semibold text-center">
+          <div className="bg-white rounded dark:bg-slate-500">
+            <header className="p-4 border-b-2 dark:border-gray-600">
+              <h2 className="text-lg font-semibold text-center text-gray-200">
                 Top Communities
               </h2>
             </header>
             <section>
               {topSubs?.map((sub) => (
-                <article key={sub.name} className="flex items-center px-4 py-2 text-xs border-b">
+                <article key={sub.name} className="flex items-center px-4 py-2 text-xs text-gray-200 border-b dark:border-gray-600 dark:bg-slate-500">
                   <div className='mr-2 cursor-pointer'>
                     <Link href={`/r/${sub.name}`}>
                       <a>

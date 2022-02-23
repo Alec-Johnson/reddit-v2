@@ -10,15 +10,15 @@ export default function Sidebar({ sub }: {sub: Sub}) {
   const { authenticated } =  useContext(AuthContext);
   
   return <aside className='ml-6 w-80'>
-    <div className="bg-white rounded">
-      <div className="p-3 bg-blue-500 rounded-t">
-        <h3 className="text-lg font-semibold text-center text-white">
+    <div className="bg-white rounded dark:bg-slate-500">
+      <div className="p-3 bg-blue-500 rounded-t dark:bg-blue-700">
+        <h3 className="text-lg font-semibold text-center text-white dark:text-gray-300">
           About Community
         </h3>
       </div>
-      <div className="p-3">
-        <p className="mb-3 text-md">{sub.description}</p>
-        <div className="flex mb-3 text-sm font-medium">
+      <div className="p-3 dark:text-gray-300">
+        <p className="mb-3 text-md dark:text-gray-200">{sub.description}</p>
+        <div className="flex mb-3 text-sm font-medium ">
           <div className="w-1/2">
             <p>5.2k</p>
             <p>members</p>

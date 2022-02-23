@@ -61,29 +61,29 @@ export default function Navbar(){
   }
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-12 px-5 bg-white">
+    <nav className="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-12 px-5 bg-white dark:bg-slate-600">
       {/* Logo and title */}
       <header className="flex items-center">
         <Link href='/'>
           <a><RedditLogo className='w-8 h-8 mr-2' /></a>
         </Link>
-        <h1 className='hidden text-2xl font-semibold lg:block'>
+        <h1 className='hidden text-2xl font-semibold lg:block dark:text-gray-300'>
           <Link href='/'>reddit v2</Link>
         </h1>
         <ThemeChanger />
       </header>
       {/* Search input */}
       <div className="max-w-full px-4 w-60 sm:w-80 lg:w-160">
-        <div className="relative flex items-center bg-gray-100 border rounded hover:border-blue-500 hover:bg-white">
+        <div className="relative flex items-center bg-gray-100 border rounded dark:border-gray-500 dark:bg-gray-700 dark:hover:border-blue-500 hover:border-blue-500 hover:bg-white">
           <i className='pl-4 pr-3 text-gray-500 fas fa-search'/>
           <input type="text" className='py-1 pr-3 bg-transparent rounded w-160 focus:outline-none' placeholder='Search' value={name} onChange={e => setName(e.target.value)} />
-        <div className="absolute left-0 right-0 bg-white top-full" >
+        <div className="absolute left-0 right-0 bg-white dark:bg-slate-500 top-full" >
           {subs?.map(sub => (
-            <div className="flex items-center px-4 py-3 cursor-pointer hover:bg-gray-200" key={sub.name} onClick={() => goToSub(sub.name)}>
+            <div className="flex items-center px-4 py-3 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700" key={sub.name} onClick={() => goToSub(sub.name)}>
               <Image src={sub.imageUrl} alt='Sub' height={32} width={32} className='rounded-full' />
               <div className="ml-4 text-sm">
-                <p className="font-medium">{sub.name}</p>
-                <p className="text-gray-600">{sub.title}</p>
+                <p className="font-medium dark:text-gray-700">{sub.name}</p>
+                <p className="text-gray-600 dark:text-gray-300">{sub.title}</p>
               </div>
             </div>
           ))}
@@ -101,10 +101,10 @@ export default function Navbar(){
         ): (
           <>
             <Link href='/login'>
-              <a className="w-20 py-1 mr-4 leading-5  sm:block lg:w-32 empty blue button">Login</a>
+              <a className="w-20 py-1 mr-4 leading-5 sm:block lg:w-32 empty blue button">Login</a>
             </Link>
             <Link href='/register'>
-              <a className="w-20 py-1 leading-5  sm:block lg:w-32 blue button">Sign Up</a>
+              <a className="w-20 py-1 leading-5 sm:block lg:w-32 blue button">Sign Up</a>
             </Link>
           </>
         )}
