@@ -5,7 +5,7 @@ A fullstack clone of the website www.reddit.com. Users can expect to create an a
 
 ## Tech Stack
 
-**Frontend:** Typescript, React, Next.js, Redux, TailwindCSS,
+**Frontend:** Typescript, React, Next.js, TailwindCSS
 
 **Backend:** Typescript, Node.js, Express, TypeORM, PostgreSQL
 
