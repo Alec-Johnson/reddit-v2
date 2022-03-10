@@ -14,7 +14,7 @@ jobs:
         command: |
           cd redditv2
           git pull
-          cd server
+          cd ../server
           npm install
           npx tsc
           cd ../client
