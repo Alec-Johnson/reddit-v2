@@ -14,10 +14,9 @@ jobs:
         command: |
           cd redditv2
           git pull
-          cd ../server
           npm install
           npx tsc
-          cd ../client
+          cd client
           npm run build
           pm2 restart server client
         host: ${{ secrets.HOST }}
