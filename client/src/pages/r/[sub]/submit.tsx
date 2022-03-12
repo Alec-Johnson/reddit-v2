@@ -38,8 +38,8 @@ export default function submit() {
     <Head>
       <title>Submit to /r/{sub?.name}</title>
     </Head>
-    <div className="w-160">
-      <div className="p-4 bg-white rounded">
+    <div className="mx-4 w-140">
+      <div className="p-4 bg-white rounded dark:bg-slate-600">
         <h1 className="mb-3 text-lg">Submit a post to /r/{subName}</h1>
         <form onSubmit={handleSubmitPost}>
           <div className="relative mb-2">

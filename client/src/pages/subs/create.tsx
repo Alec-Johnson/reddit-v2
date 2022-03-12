@@ -24,7 +24,7 @@ export default function create() {
   }
 
   return ( 
-    <div className='flex bg-white'>
+    <div className='flex bg-white dark:bg-slate-600'>
       <Head>
         <title>Create a new community</title>
       </Head>
@@ -38,7 +38,7 @@ export default function create() {
           <form onSubmit={submitForm}>
             <div className="my-6">
               <p className="font-medium">Name</p>
-              <p className="mb-2 text-xs text-gray-500">Community names including capitalization cannot be changed.</p>
+              <p className="mb-2 text-xs text-gray-500 dark:text-gray-300">Community names including capitalization cannot be changed.</p>
               <input 
                 type="text" className={"w-full p-3 border border-gray-200 rounded hover:border-gray-500" + (errors.name ? " border-red-500" : "")}
                 value={name}
@@ -48,7 +48,7 @@ export default function create() {
              
             <div className="my-6">
               <p className="font-medium">Title</p>
-              <p className="mb-2 text-xs text-gray-500">Community title that represents the topic and can change at any time.</p>
+              <p className="mb-2 text-xs text-gray-50 dark:text-gray-300">Community title that represents the topic and can change at any time.</p>
               <input type="text" className={"w-full p-3 border border-gray-200 rounded hover:border-gray-500" + (errors.title ? " border-red-500" : "")}
                 value={title}
                 onChange={e => setTitle(e.target.value)} />
@@ -57,7 +57,7 @@ export default function create() {
 
             <div className="my-6">
               <p className="font-medium">Description</p>
-              <p className="mb-2 text-xs text-gray-500">This is how users will come to understand your community.</p>
+              <p className="mb-2 text-xs text-gray-500 dark:text-gray-300">This is how users will come to understand your community.</p>
               <textarea 
                 className="w-full p-3 border border-gray-200 rounded hover:border-gray-500"
                 value={description}

@@ -84,13 +84,13 @@ export default function Home() {
         <aside className='hidden ml-6 md:block w-80'>
           <div className="bg-white rounded dark:bg-slate-500">
             <header className="p-4 border-b-2 dark:border-gray-600">
-              <h2 className="text-lg font-semibold text-center text-gray-200">
+              <h2 className="text-lg font-semibold text-center text-gray-500 dark:text-gray-200">
                 Top Communities
               </h2>
             </header>
             <section>
               {topSubs?.map((sub) => (
-                <article key={sub.name} className="flex items-center px-4 py-2 text-xs text-gray-200 border-b dark:border-gray-600 dark:bg-slate-500">
+                <article key={sub.name} className="flex items-center px-4 py-2 text-xs text-gray-500 border-b dark:border-gray-600 dark:text-gray-200 dark:bg-slate-500">
                   <div className='mr-2 cursor-pointer'>
                     <Link href={`/r/${sub.name}`}>
                       <a>
@@ -106,7 +106,7 @@ export default function Home() {
               ))}
             </section>
             {authenticated && 
-              <aside className="p-4 border-t-2">
+              <aside className="p-4 border-t-2 dark:border-gray-600">
                 <Link href="/subs/create">
                   <a className="w-full px-2 py-1 blue button">
                     Create Community

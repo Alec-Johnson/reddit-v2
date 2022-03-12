@@ -33,7 +33,7 @@ export default function SinglePost({ post, vote }: SinglePostProps) {
       </aside>
       <div className="py-2 pr-2">
         <div className="flex items-center">
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-500 dark:text-gray-300">
             Posted by
             <Link href={`/u/${post.username}`}>
               <a className="mx-1 hover:underline">

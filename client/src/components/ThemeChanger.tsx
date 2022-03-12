@@ -18,13 +18,12 @@ export default function ThemeChanger() {
   if (!mounted) return null
 
   return (
-    <div>
-      <input type="checkbox" name="" id="checkbox" className="hidden" onClick={switchTheme} />
-      <label htmlFor="checkbox" className="cursor-pointer">
-        <div className="flex items-center h-5 bg-gray-300 border-2 rounded-full w-9">
-          <div className="w-4 h-4 bg-white rounded-full shadow"></div>
-        </div>
-      </label>
+    <div onClick={switchTheme} className='cursor-pointer'>
+      {theme === "light" ?
+        <i className='fa-solid fa-xl fa-moon' />
+        :
+        <i className='fa-solid fa-xl fa-sun' />
+      }
     </div>
   )
 }

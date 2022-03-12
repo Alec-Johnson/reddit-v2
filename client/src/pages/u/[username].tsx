@@ -62,7 +62,7 @@ export default function User() {
             })}
           </div>
           <header className="ml-6 w-80">
-            <div className="bg-white rounded">
+            <div className="bg-white rounded dark:bg-slate-500">
               <div className="flex justify-center p-3 mx-auto overflow-hidden bg-blue-500 rounded-t">
                 <input type="file" hidden ref={fileUploadRef} onChange={uploadImage} />
                 <Image 

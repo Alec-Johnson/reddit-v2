@@ -31,7 +31,7 @@ export default function Register() {
   }
   if (authenticated) router.push('/')
   return (
-    <div className="flex bg-white">
+    <div className="flex bg-white dark:bg-slate-700">
       <Head>
         <title>Register</title>
       </Head>

@@ -63,17 +63,19 @@ export default function Navbar(){
   return (
     <nav className="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-12 px-5 bg-white dark:bg-slate-600">
       {/* Logo and title */}
-      <header className="flex items-center">
+      <header className="relative flex items-center">
         <Link href='/'>
           <a><RedditLogo className='w-8 h-8 mr-2' /></a>
         </Link>
-        <h1 className='hidden text-2xl font-semibold lg:block dark:text-gray-300'>
+        <h1 className='hidden text-xl font-semibold lg:text-2xl sm:block dark:text-gray-300 whitespace-nowrap'>
           <Link href='/'>reddit v2</Link>
         </h1>
-        <ThemeChanger />
+        <div className="hidden ml-4 sm:block">
+          <ThemeChanger />
+        </div>
       </header>
       {/* Search input */}
-      <div className="max-w-full px-4 w-60 sm:w-80 lg:w-160">
+      <div className="px-4 w-140">
         <div className="relative flex items-center bg-gray-100 border rounded dark:border-gray-500 dark:bg-gray-700 dark:hover:border-blue-500 hover:border-blue-500 hover:bg-white">
           <i className='pl-4 pr-3 text-gray-500 fas fa-search'/>
           <input type="text" className='py-1 pr-3 bg-transparent rounded w-160 focus:outline-none' placeholder='Search' value={name} onChange={e => setName(e.target.value)} />
@@ -93,7 +95,7 @@ export default function Navbar(){
       </div>
      
       {/* Auth buttons */}
-      <div className="flex">
+      <div className="relative hidden sm:flex">
         {!loading && authenticated ? (
           <button className="w-20 py-1 mr-4 leading-5 sm:block lg:w-32 empty blue button" onClick={handleLogout}>
             Logout
@@ -109,6 +111,38 @@ export default function Navbar(){
           </>
         )}
       </div>
+      {/* Mobile Dropdown */}
+      <div className="sm:hidden">
+        <div className="group ">
+          <button className="flex items-center w-full px-4 py-4 focus:outline-none">
+            <i className="fa-solid fa-user"></i>
+          </button>
+          <div className="absolute right-0 z-10 hidden h-auto group-hover:block">
+            <div className="flex px-2 py-4 bg-gray-400 rounded-md shadow-lg">
+              <div className="flex flex-col items-center w-28">
+                {!loading && authenticated ? (
+                  <button className="w-20 py-1 leading-5 sm:block empty blue button" onClick={handleLogout}>
+                    Logout
+                  </button>
+                ): (
+                  <>
+                    <Link href='/login'>
+                      <a className="w-20 py-1 leading-5 sm:block empty blue button">Login</a>
+                    </Link>
+                    <Link href='/register'>
+                      <a className="w-20 py-1 mt-2 leading-5 sm:block blue button">Sign Up</a>
+                    </Link>
+                  </>
+                )}
+                <div className="mt-2">
+                  <ThemeChanger />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div>
+      
     </nav>
   )
 }

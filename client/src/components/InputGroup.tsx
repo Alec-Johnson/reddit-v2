@@ -19,7 +19,7 @@ export default function InputGroup({
 }: InputGroupProps) {
   return (
     <>
-      <input className={`w-full p-3 transition duration-200 border border-gray-300 rounded outline-none bg-gray-50 focus:bg-white hover:bg-white 
+      <input className={`w-full p-3 transition duration-200 border border-gray-300 dark:placeholder-gray-200 rounded outline-none bg-gray-50 dark:bg-slate-500 focus:bg-white dark:focus:bg-slate-400 hover:bg-white dark:hover:bg-slate-600 
         ${error && ' border-red-500'} ${className}`}
         type={type} 
         placeholder={placeholder}

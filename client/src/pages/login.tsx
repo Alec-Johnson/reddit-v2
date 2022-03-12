@@ -32,7 +32,7 @@ export default function Login() {
   if (authenticated) router.push('/')
 
   return (
-    <div className="flex bg-white">
+    <div className="flex bg-white dark:bg-slate-700">
       <Head>
         <title>Login</title>
       </Head>

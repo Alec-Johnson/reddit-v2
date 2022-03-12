@@ -20,7 +20,7 @@ module.exports = {
         },
       },
       spacing: {
-        160: '40rem',
+        140: '35rem',
       },
       container: false,
     },

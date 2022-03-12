@@ -96,7 +96,7 @@ export default function PostPage() {
       <div className="container flex pt-5 ">
         {/* Post */}
         <div className="w-160">
-          <section className="bg-white rounded">
+          <section className="bg-white rounded dark:bg-slate-600">
             {post && (
               <>
                 <SinglePost vote={vote} post={post} />

@@ -10,7 +10,6 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link rel='icon' href='/images/favicon.ico' />
           <meta property="og:site_name" content="Reddit V2" />
           {/* <meta property="twitter:site" content="@RedditV2" /> */}
           <meta property="twitter:card" content="summary" />

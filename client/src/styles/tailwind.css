@@ -6,7 +6,6 @@
   .button {
     @apply inline-block text-xs font-bold text-center uppercase border rounded;
   }
-
   .button.blue {
     @apply text-white bg-blue-500 border-blue-500;
   }

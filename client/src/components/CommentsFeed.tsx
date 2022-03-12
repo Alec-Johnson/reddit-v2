@@ -39,7 +39,7 @@ export default function CommentsFeed({ comment, vote }: CommentsFeedProps) {
               {comment.username}
             </a>
           </Link>
-          <span className="text-gray-600">
+          <span className="text-gray-600 dark:text-gray-300">
             {`
               ${comment.voteScore}
               points •
